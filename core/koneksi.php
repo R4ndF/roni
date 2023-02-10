@@ -12,7 +12,7 @@
         }
 
         public function login($username,$password){
-            $query = mysqli_query($this->kon, "SELECT * FROM siswa CROSS JOIN petugas WHERE username = '$username' AND password ='$password'");
+            $query = mysqli_query($this->kon, "SELECT * FROM petugas WHERE username = '$username' AND password ='$password'");
             $row = mysqli_fetch_array($query);
             if ($row['username'] == $username AND $row['password'] == $password){
                 if($row['level'] == 'admin'){
@@ -21,22 +21,28 @@
                     $_SESSION['username'] = $row['username'];                    
                     $_SESSION['level'] = $row['level'];
                     header("Location: ../dashboard");
-                }elseif($row['level'] == 'petugas'){
+                }elseif($row['level'] == 'petugas'){    
                     session_start();
                     $_SESSION['id_petugas'] = $row['id_petugas'];
                     $_SESSION['username'] = $row['username'];                    
                     $_SESSION['level'] = $row['level'];
                     header("Location: ../dashboard");
                 }else{
-                    session_start();
-                    $_SESSION['nisn'] = $row['nisn'];
-                    $_SESSION['username'] = $row['username'];                    
-                    header("Location: ../dashboard");
+                session_start();
+                $_SESSION['msg'] = 'Level not valid';
                 }
             }else{
                 session_start();
+            $query2 = mysqli_query($this->kon, "SELECT * FROM siswa WHERE username = '$username' AND password = '$password'");
+            $row2 = mysqli_fetch_array($query2);
+            if ($row2['username'] == $username AND $row2['password'] == $password){
+                $_SESSION['nisn'] = $row2 ['nisn'];
+                $_SESSION['username'] = $row2 ['username'];
+                header("Location:../dashboard?url=siswa");
+            }else{
                 $_SESSION['msg'] = 'Username or password is invalid !!';
-                header("Location: ../index.php");
+                header("Location:../index.php");
+            }
             }
         }
     }

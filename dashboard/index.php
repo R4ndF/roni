@@ -1,24 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+  session_start();
+require_once "../inc/d_auth.php";
+?>
+<html lang="en" class="w3-cyan">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?= $url?></title>
     <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/font-awesome-4.7.0//css/font-awesome.min.css">
 </head>
 <body>
-    <div class="container w3-display-topmiddle">
-<div class="w3-bar w3-green ">
-  <div class="w3-bar-item">home</div>
-  <div class="w3-bar-item">Pembayaran</div>
-  <div class="w3-bar-item">riwayat</div>
-</div>
+    <div class ="w3-sidebar w3-black">
+      <img src="../assets/img/logo spp.png" alt="">
+      <?php include '../inc/d_nav.php' ?>    
+       <?= $level ?>   
+       <?= $_SESSION['level'] ?>
+       <?= $url ?>
     </div>
-<div class="w3-bar-block w3-green w3-display-topleft">
-
-  <div class="w3-bar-item">siswa</div>
-  <div class="w3-bar-item">logout</div>
-</div>
+    <div style="margin-left:210px">
+    <?php include '../inc/d_load.php' ?>
+    </div>
+                                
 </body>
 </html>
